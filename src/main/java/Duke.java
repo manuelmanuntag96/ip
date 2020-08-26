@@ -14,6 +14,8 @@ public class Duke {
         String bleh = "bleh";
         String bye = "bye";
         Scanner in = new Scanner(System.in);
+        String[] storeList = new String[100];
+        int i = 0;
 
         System.out.println("____________________________________________________________");
         System.out.println(" Hello! I'm Duke");
@@ -29,8 +31,20 @@ public class Duke {
             }
             else if(line.equals(list)){
                 System.out.println("____________________________________________________________");
-                System.out.println(" list");
+                int number = 1;
+                while (number <= i) {
+                    System.out.println(number + ": " + storeList[number-1]);
+                    number++;
+                }
                 System.out.println("____________________________________________________________");
+            } else {
+                if(!line.equals(bye)) {
+                    storeList[i] = line;
+                    System.out.println("____________________________________________________________");
+                    System.out.println(" added: " + line);
+                    System.out.println("____________________________________________________________");
+                    i++;
+                }
             }
 
         }while (!line.equals(bye));
