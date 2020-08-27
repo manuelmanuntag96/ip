@@ -13,9 +13,7 @@ public class Duke {
         String list = "list";
         String bleh = "bleh";
         String bye = "bye";
-        //String done = "done";
         Scanner in = new Scanner(System.in);
-        //String[] storeList = new String[100];
         Task[] taskList = new Task[100];
         int i = 0;
 
@@ -29,8 +27,7 @@ public class Duke {
                 System.out.println("____________________________________________________________");
                 System.out.println(" bleh");
                 System.out.println("____________________________________________________________");
-            }
-            else if(line.equals(list)){
+            } else if(line.equals(list)){
                 System.out.println("____________________________________________________________");
                 int number = 1;
                 System.out.println(" Here are the tasks in your list:");
@@ -39,11 +36,9 @@ public class Duke {
                     number++;
                 }
                 System.out.println("____________________________________________________________");
-            }
-            else if(line.contains("done")){
+            } else if(line.contains("done")){
                 int dividerPosition = line.indexOf(" ");
                 String taskNumber = line.substring(dividerPosition+1);
-                //System.out.println(taskNumber);
                 int number = Integer.parseInt(taskNumber);
                 Task.markAsDone(taskList[number-1]);
 
@@ -51,12 +46,9 @@ public class Duke {
                 System.out.println(" Nice! I've marked this task as done:");
                 System.out.println(" [" + taskList[number-1].getStatusIcon()+ "] " + taskList[number-1].description);
                 System.out.println("____________________________________________________________");
-            }
-            else {
+            } else {
                 if(!line.equals(bye)) {
                     taskList[i] = new Task(line);
-
-                    //storeList[i] = taskList[i].description;
 
                     System.out.println("____________________________________________________________");
                     System.out.println(" added: " + line);
@@ -65,7 +57,7 @@ public class Duke {
                 }
             }
 
-        }while (!line.equals(bye));
+        } while (!line.equals(bye));
         System.out.println("____________________________________________________________");
         System.out.println(" Bye. Hope to see you again soon!");
         System.out.println("____________________________________________________________");
@@ -84,10 +76,8 @@ public class Duke {
             return (isDone ? "\u2713" : "\u2718"); //return tick or X symbols
         }
 
-        public static void markAsDone(Task t){
-            t.isDone=true;
+        public static void markAsDone(Task t) {
+            t.isDone = true;
         }
-
-        //...
     }
 }
