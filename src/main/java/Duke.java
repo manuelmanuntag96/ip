@@ -40,6 +40,8 @@ public class Duke {
                     System.out.println("____________________________________________________________");
                 } catch (IndexOutOfBoundsException e) {
                     System.out.println("☹ OOPS!!! The description of a deadline cannot be empty.");
+                } catch (DukeException e) {
+                    System.out.println("☹ OOPS!!! The deadline by cannot be empty.");
                 }
             } else if(line.contains("event")) {
                 try {
@@ -52,6 +54,8 @@ public class Duke {
                     System.out.println("____________________________________________________________");
                 } catch (StringIndexOutOfBoundsException e) {
                     System.out.println("☹ OOPS!!! The description of a event cannot be empty.");
+                } catch (DukeException e) {
+                    System.out.println("☹ OOPS!!! The event by cannot be empty.");
                 }
             } else if(line.contains("done")) {
                 int dividerPosition = line.indexOf(" ");
@@ -65,14 +69,6 @@ public class Duke {
                 System.out.println("____________________________________________________________");
             }
         } while(!line.contains("bye"));
-
-        try {
-
-        } catch (NumberFormatException e) {
-            System.out.println("WIDTH or HEIGHT is not a number");
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("WIDTH or HEIGHT is missing: ");
-        }  // add more catch blocks here
 
         showOutro();
     }
