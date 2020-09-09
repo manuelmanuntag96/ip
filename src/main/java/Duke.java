@@ -30,23 +30,29 @@ public class Duke {
                     System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
                 }
             } else if(line.contains("deadline")) {
-                int dividerPosition = line.indexOf(" ");
-                int dividerBy = line.indexOf("/");
-                String taskName = line.substring(dividerPosition + 1, dividerBy - 1);
-                String taskBy = line.substring(dividerBy + 1);
-                System.out.println("____________________________________________________________");
-                taskCount = Deadline.addTask(taskList, taskCount, taskName, taskBy);
-                System.out.println("____________________________________________________________");
-
+                try {
+                    int dividerPosition = line.indexOf(" ");
+                    int dividerBy = line.indexOf("/");
+                    String taskName = line.substring(dividerPosition + 1, dividerBy - 1);
+                    String taskBy = line.substring(dividerBy + 1);
+                    System.out.println("____________________________________________________________");
+                    taskCount = Deadline.addTask(taskList, taskCount, taskName, taskBy);
+                    System.out.println("____________________________________________________________");
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("☹ OOPS!!! The description of a deadline cannot be empty.");
+                }
             } else if(line.contains("event")) {
-                int dividerPosition = line.indexOf(" ");
-                int dividerBy = line.indexOf("/");
-                String taskName = line.substring(dividerPosition+1, dividerBy-1);
-                String taskAt = line.substring(dividerBy+1);
-                System.out.println("____________________________________________________________");
-                taskCount = Event.addTask(taskList, taskCount, taskName, taskAt);
-                System.out.println("____________________________________________________________");
-
+                try {
+                    int dividerPosition = line.indexOf(" ");
+                    int dividerBy = line.indexOf("/");
+                    String taskName = line.substring(dividerPosition+1, dividerBy-1);
+                    String taskAt = line.substring(dividerBy+1);
+                    System.out.println("____________________________________________________________");
+                    taskCount = Event.addTask(taskList, taskCount, taskName, taskAt);
+                    System.out.println("____________________________________________________________");
+                } catch (StringIndexOutOfBoundsException e) {
+                    System.out.println("☹ OOPS!!! The description of a event cannot be empty.");
+                }
             } else if(line.contains("done")) {
                 int dividerPosition = line.indexOf(" ");
                 int taskNum = Integer.parseInt(line.substring(dividerPosition+1));
