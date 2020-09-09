@@ -10,7 +10,7 @@ public class Task {
         this.taskType = "T";
     }
 
-    public static int addTask(Task[] taskList, int taskCount, String taskName) {
+    public static int addTask(Task[] taskList, int taskCount, String taskName) throws DukeException {
         taskList[taskCount] = new Task(taskName);
 
         System.out.println(" added: " + taskList[taskCount].description);
