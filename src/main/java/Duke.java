@@ -58,11 +58,15 @@ public class Duke {
                     System.out.println("☹ OOPS!!! The event by cannot be empty.");
                 }
             } else if(line.contains("done")) {
-                int dividerPosition = line.indexOf(" ");
-                int taskNum = Integer.parseInt(line.substring(dividerPosition+1));
-                System.out.println("____________________________________________________________");
-                Task.markAsDone(taskList, taskCount, taskNum);
-                System.out.println("____________________________________________________________");
+                try {
+                    int dividerPosition = line.indexOf(" ");
+                    int taskNum = Integer.parseInt(line.substring(dividerPosition+1));
+                    System.out.println("____________________________________________________________");
+                    Task.markAsDone(taskList, taskCount, taskNum);
+                    System.out.println("____________________________________________________________");
+                } catch (NullPointerException e) {
+                    System.out.println("☹ OOPS!!! The number cannot be invalid.");
+                }
             } else if (!line.contains("bye") & !line.contains("todo") & !line.contains("event") & !line.contains("deadline") & !line.contains("list") & !line.contains("done")){
                 System.out.println("____________________________________________________________");
                 System.out.println(" Blah");
