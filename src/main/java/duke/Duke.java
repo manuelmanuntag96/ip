@@ -69,13 +69,20 @@ public class Duke {
                     System.out.println("☹ OOPS!!! The number cannot be invalid.");
                 }
             } else if (!line.contains("bye") & !line.contains("todo") & !line.contains("event") & !line.contains("deadline") & !line.contains("list") & !line.contains("done")){
-                System.out.println("____________________________________________________________");
-                System.out.println(" Blah");
-                System.out.println("____________________________________________________________");
+                try {
+                    invalidInput();
+                } catch (DukeException e) {
+                    System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                }
+
             }
         } while(!line.contains("bye"));
 
         showOutro();
+    }
+
+    private static void invalidInput() throws DukeException  {
+        throw new DukeException();
     }
 
     private static void showIntroduction() {
