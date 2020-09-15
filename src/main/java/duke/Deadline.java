@@ -24,7 +24,7 @@ public class Deadline extends Task {
     }
 
     public static void taskList(ArrayList taskList, int taskCount) {
-        for(int i=0; i<taskCount;i++) {
+        for(int i=0; i<taskList.size();i++) {
             if(((Task)taskList.get(i)).taskType == "T") {
                 System.out.println(" " + (i + 1) + ".[" + ((Task)taskList.get(i)).taskType + "][" + ((Task)taskList.get(i)).getStatusIcon() + "] " + ((Task)taskList.get(i)).description);
             } else {

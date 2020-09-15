@@ -30,8 +30,30 @@ public class Task {
     }
 
     public static void markAsDone(ArrayList taskList, int taskCount, int taskNum) {
-        ((Task)taskList.get(taskNum-1)).isDone = true;
-        System.out.println(" Nice! I've marked this task as done:\n" + "   [" + ((Task)taskList.get(taskNum-1)).getStatusIcon() + "] " + ((Task)taskList.get(taskNum-1)).description );
+        ((Task) taskList.get(taskNum)).isDone = true;
+        if (((Task) taskList.get(taskNum)).taskType == "T") {
+            System.out.println(" Nice! I've marked this task as done:\n" + "  [" + ((Task) taskList.get(taskNum)).taskType + "][" + ((Task) taskList.get(taskNum)).getStatusIcon() + "] " + ((Task) taskList.get(taskNum)).description);
+        } else if (((Task) taskList.get(taskNum)).taskType == "D") {
+            System.out.println(" Nice! I've marked this task as done:\n" + "  [" + ((Task) taskList.get(taskNum)).taskType + "][" + ((Task) taskList.get(taskNum)).getStatusIcon() + "] " + ((Task) taskList.get(taskNum)).description + " (" + ((Task) taskList.get(taskNum)).by + ")");
+        } else if (((Task) taskList.get(taskNum)).taskType == "E") {
+            System.out.println(" Nice! I've marked this task as done:\n" + "  [" + ((Task) taskList.get(taskNum)).taskType + "][" + ((Task) taskList.get(taskNum)).getStatusIcon() + "] " + ((Task) taskList.get(taskNum)).description + " (" + ((Task) taskList.get(taskNum)).by + ")");
+        }
+
+    }
+
+    public static int delete(ArrayList<Task> taskList, int taskCount, int taskNum) {
+
+        if(((Task)taskList.get(taskNum)).taskType == "T") {
+            System.out.println(" Noted. I've removed this task:\n" + "  [" + ((Task)taskList.get(taskNum)).taskType + "]["+ ((Task)taskList.get(taskNum)).getStatusIcon() + "] " + ((Task)taskList.get(taskNum)).description + "\n" + " Now you have " + (taskCount - 1) + " tasks in the list.");
+        } else if (((Task)taskList.get(taskNum)).taskType == "D") {
+            System.out.println(" Noted. I've removed this task:\n" + "  [" + ((Task)taskList.get(taskNum)).taskType + "][" + ((Task)taskList.get(taskNum)).getStatusIcon() + "] " + ((Task)taskList.get(taskNum)).description + " (" + ((Task) taskList.get(taskNum)).by + ")" + "\n" + " Now you have " + (taskList.size()-1) + " tasks in the list.");
+        } else if (((Task)taskList.get(taskNum)).taskType == "E") {
+            System.out.println(" Noted. I've removed this task:\n" + "  [" + ((Task)taskList.get(taskNum)).taskType + "][" + ((Task)taskList.get(taskNum)).getStatusIcon() + "] " + ((Task)taskList.get(taskNum)).description + " (" + ((Task) taskList.get(taskNum)).by + ")" + "\n" + " Now you have " + (taskList.size()-1) + " tasks in the list.");
+        }
+
+        taskList.remove(taskNum);
+        taskCount--;
+        return taskCount;
     }
 
     public String getStatusIcon() {

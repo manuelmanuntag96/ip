@@ -63,14 +63,32 @@ public class Duke {
             } else if(line.contains("done")) {
                 try {
                     int dividerPosition = line.indexOf(" ");
-                    int taskNum = Integer.parseInt(line.substring(dividerPosition+1));
+                    int taskNum = Integer.parseInt(line.substring(dividerPosition+1)) - 1;
                     System.out.println("____________________________________________________________");
                     Task.markAsDone(taskList, taskCount, taskNum);
                     System.out.println("____________________________________________________________");
                 } catch (NullPointerException e) {
                     System.out.println("☹ OOPS!!! The number cannot be invalid.");
+                } catch (NumberFormatException e) {
+                    System.out.println("☹ OOPS!!! The number cannot be invalid.");
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("☹ OOPS!!! The number cannot be out of bounds.");
                 }
-            } else if (!line.contains("bye") & !line.contains("todo") & !line.contains("event") & !line.contains("deadline") & !line.contains("list") & !line.contains("done")){
+            } else if(line.contains("delete")) {
+                try {
+                    int dividerPosition = line.indexOf(" ");
+                    int taskNum = Integer.parseInt(line.substring(dividerPosition+1)) - 1;
+                    System.out.println("____________________________________________________________");
+                    taskCount = Task.delete(taskList, taskCount, taskNum);
+                    System.out.println("____________________________________________________________");
+                } catch (NullPointerException e) {
+                    System.out.println("☹ OOPS!!! The number cannot be invalid.");
+                } catch (NumberFormatException e) {
+                    System.out.println("☹ OOPS!!! The number cannot be invalid.");
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("☹ OOPS!!! The number cannot be out of bounds.");
+                }
+            } else if (!line.contains("bye") & !line.contains("todo") & !line.contains("event") & !line.contains("deadline") & !line.contains("list") & !line.contains("done") & !line.contains("delete")){
                 try {
                     invalidInput();
                 } catch (DukeException e) {
