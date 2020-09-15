@@ -1,10 +1,12 @@
 package duke;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
     public static final int MAX_SIZE = 100;
-    private static Task[] taskList = new Task[MAX_SIZE];
+    //private static Task[] taskList = new Task[MAX_SIZE];
+    private static ArrayList<Task> taskList = new ArrayList<>();
     private static int taskCount = 0;
 
     public static void main(String[] args) throws DukeException {

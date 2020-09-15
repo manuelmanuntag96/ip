@@ -1,5 +1,7 @@
 package duke;
 
+import java.util.ArrayList;
+
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -12,10 +14,10 @@ public class Task {
         this.taskType = "T";
     }
 
-    public static int addTask(Task[] taskList, int taskCount, String taskName) throws DukeException {
-        taskList[taskCount] = new Task(taskName);
+    public static int addTask(ArrayList taskList, int taskCount, String taskName) throws DukeException {
+        taskList.add(new Task(taskName));
 
-        System.out.println(" added: " + taskList[taskCount].description);
+        System.out.println(" added: " + ((Task)taskList.get(taskCount)).description);
 
         taskCount++;
         return taskCount;
@@ -27,9 +29,9 @@ public class Task {
         }
     }
 
-    public static void markAsDone(Task[] taskList, int taskCount, int taskNum) {
-        taskList[taskNum-1].isDone = true;
-        System.out.println(" Nice! I've marked this task as done:\n" + "   [" + taskList[taskNum-1].getStatusIcon() + "] " + taskList[taskNum-1].description );
+    public static void markAsDone(ArrayList taskList, int taskCount, int taskNum) {
+        ((Task)taskList.get(taskNum-1)).isDone = true;
+        System.out.println(" Nice! I've marked this task as done:\n" + "   [" + ((Task)taskList.get(taskNum-1)).getStatusIcon() + "] " + ((Task)taskList.get(taskNum-1)).description );
     }
 
     public String getStatusIcon() {

@@ -1,5 +1,7 @@
 package duke;
 
+import java.util.ArrayList;
+
 public class Event extends Task {
 
     public Event(String description, String taskAt) {
@@ -8,13 +10,13 @@ public class Event extends Task {
         taskType = "E";
     }
 
-    public static int addTask(Task[] taskList, int taskCount, String taskName, String taskAt) throws DukeException {
+    public static int addTask(ArrayList taskList, int taskCount, String taskName, String taskAt) throws DukeException {
         if (!taskAt.contains("@ ")) {
             throw new DukeException();
         } else {
-            taskList[taskCount] = new Event(taskName, taskAt);
+            taskList.add(new Event(taskName, taskAt));
 
-            System.out.println(" Got it. I've added this task:\n" + "  [" + taskList[taskCount].taskType + "]["+ taskList[taskCount].getStatusIcon() + "] " + taskList[taskCount].description + " (" + taskList[taskCount].by + ")"  + "\n" + " Now you have " + (taskCount+1) + " tasks in the list.");
+            System.out.println(" Got it. I've added this task:\n" + "  [" + ((Task)taskList.get(taskCount)).taskType + "]["+ ((Task)taskList.get(taskCount)).getStatusIcon() + "] " + ((Task)taskList.get(taskCount)).description + " (" + ((Task)taskList.get(taskCount)).by + ")"  + "\n" + " Now you have " + (taskCount+1) + " tasks in the list.");
 
             taskCount++;
             return taskCount;
