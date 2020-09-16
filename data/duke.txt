@@ -1,3 +1,0 @@
-1 T a
-0 D b /by b
-0 E c /@ c
