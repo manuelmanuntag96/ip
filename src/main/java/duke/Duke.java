@@ -2,10 +2,12 @@ package duke;
 
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Duke {
     public static final int MAX_SIZE = 100;
-    //private static Task[] taskList = new Task[MAX_SIZE];
     private static ArrayList<Task> taskList = new ArrayList<>();
     private static int taskCount = 0;
 
@@ -14,6 +16,10 @@ public class Duke {
         Scanner in = new Scanner(System.in);
 
         showIntroduction();
+
+        CreateFileDir.CreateFile();
+
+        taskCount = ReadFile.main(taskList, taskCount);
 
         do{
             line = in.nextLine();

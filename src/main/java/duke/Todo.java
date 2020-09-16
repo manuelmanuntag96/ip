@@ -16,6 +16,9 @@ public class Todo extends Task {
             taskList.add(new Todo(taskName));
 
             System.out.println(" Got it. I've added this task:\n" + "  [" + ((Task)taskList.get(taskCount)).taskType + "][" + ((Task)taskList.get(taskCount)).getStatusIcon() + "] " + ((Task)taskList.get(taskCount)).description + "\n" + " Now you have " + (taskCount + 1) + " tasks in the list.");
+
+            WriteToFile.main(taskList);
+
             taskCount++;
             return taskCount;
         }

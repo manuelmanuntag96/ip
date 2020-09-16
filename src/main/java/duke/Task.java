@@ -1,6 +1,7 @@
 package duke;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Task {
     protected String description;
@@ -19,6 +20,8 @@ public class Task {
 
         System.out.println(" added: " + ((Task)taskList.get(taskCount)).description);
 
+
+
         taskCount++;
         return taskCount;
     }
@@ -31,6 +34,7 @@ public class Task {
 
     public static void markAsDone(ArrayList taskList, int taskCount, int taskNum) {
         ((Task) taskList.get(taskNum)).isDone = true;
+        WriteToFile.main(taskList);
         if (((Task) taskList.get(taskNum)).taskType == "T") {
             System.out.println(" Nice! I've marked this task as done:\n" + "  [" + ((Task) taskList.get(taskNum)).taskType + "][" + ((Task) taskList.get(taskNum)).getStatusIcon() + "] " + ((Task) taskList.get(taskNum)).description);
         } else if (((Task) taskList.get(taskNum)).taskType == "D") {
@@ -52,7 +56,50 @@ public class Task {
         }
 
         taskList.remove(taskNum);
+        WriteToFile.main(taskList);
         taskCount--;
+        return taskCount;
+    }
+
+    public static String taskListToString(ArrayList taskList) {
+        String taskListString = "";
+
+        for(int i = 0; i < taskList.size(); i++) {
+            if(((Task)taskList.get(i)).taskType == "T") {
+                taskListString = taskListString + (((Task) taskList.get(i)).isDone ? "1" : "0") + " " + ((Task) taskList.get(i)).taskType + " " + ((Task) taskList.get(i)).description + "\n";
+            } else {
+                taskListString = taskListString + (((Task) taskList.get(i)).isDone ? "1" : "0") + " " + ((Task) taskList.get(i)).taskType + " " + ((Task) taskList.get(i)).description + " /" + ((Task)taskList.get(i)).by  + "\n";
+            }
+        }
+
+        return taskListString;
+    }
+
+    public static int readToArray(Scanner myReader, ArrayList<Task> taskList, int taskCount) throws DukeException {
+        while (myReader.hasNextLine()) {
+            String data = myReader.nextLine();
+            int dividerPosition = data.indexOf(" ");
+            String taskNameType = data.substring(dividerPosition+1);
+            int dividerPosition2 = data.indexOf(" ");
+            if(taskNameType.contains("T ")) {
+                String taskName = taskNameType.substring(dividerPosition2+1);
+                taskCount = Todo.addTask(taskList, taskCount, taskName);
+            } else if (taskNameType.contains("D ")) {
+                int dividerBy = taskNameType.indexOf("/");
+                String taskName = taskNameType.substring(dividerPosition2+1, dividerBy - 1);
+                String taskBy = taskNameType.substring(dividerBy + 1);
+                taskCount = Deadline.addTask(taskList, taskCount, taskName, taskBy);
+            } else if (taskNameType.contains("E ")) {
+                int dividerBy = taskNameType.indexOf("/");
+                String taskName = taskNameType.substring(dividerPosition2+1, dividerBy-1);
+                String taskAt = taskNameType.substring(dividerBy+1);
+                taskCount = Event.addTask(taskList, taskCount, taskName, taskAt);
+            }
+
+            if (data.contains("1 ")) {
+                taskList.get(taskList.size()-1).isDone=true;
+            }
+        }
         return taskCount;
     }
 
