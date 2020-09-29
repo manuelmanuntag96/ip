@@ -94,6 +94,13 @@ public class Duke {
                 } catch (IndexOutOfBoundsException e) {
                     System.out.println("☹ OOPS!!! The number cannot be out of bounds.");
                 }
+            } else if(line.contains("find")) {
+                int dividerPosition = line.indexOf(" ");
+                String key = line.substring(dividerPosition+1);
+                System.out.println("____________________________________________________________");
+                Task.find(taskList, key);
+                System.out.println("____________________________________________________________");
+
             } else if (!line.contains("bye") & !line.contains("todo") & !line.contains("event") & !line.contains("deadline") & !line.contains("list") & !line.contains("done") & !line.contains("delete")){
                 try {
                     invalidInput();

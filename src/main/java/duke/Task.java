@@ -107,5 +107,29 @@ public class Task {
         return (isDone ? "\u2713" : "\u2718"); //return tick or X symbols
     }
 
+    public static void find(ArrayList<Task> taskList, String key) {
+        int count = 1;
+        boolean hasMatch = false;
+
+        System.out.println(" Here are the matching tasks in your list:");
+        for (int i = 0 ; i < taskList.size(); i++) {
+            if (((Task) taskList.get(i)).description.contains(key)) {
+                hasMatch = true;
+                if(((Task)taskList.get(i)).taskType == "T") {
+                    System.out.println(" " + count +".[" + ((Task) taskList.get(i)).taskType + "][" + ((Task) taskList.get(i)).getStatusIcon() + "] " + ((Task) taskList.get(i)).description);
+                } else if(((Task)taskList.get(i)).taskType == "D") {
+                    System.out.println(" " + count +".[" + ((Task)taskList.get(i)).taskType + "]["+ ((Task)taskList.get(i)).getStatusIcon() + "] " + ((Task)taskList.get(i)).description + " (" + ((Task)taskList.get(i)).by + ")");
+                } else if(((Task)taskList.get(i)).taskType == "E") {
+                    System.out.println(" " + count +".[" + ((Task)taskList.get(i)).taskType + "]["+ ((Task)taskList.get(i)).getStatusIcon() + "] " + ((Task)taskList.get(i)).description + " (" + ((Task)taskList.get(i)).by + ")");
+                }
+                count++;
+            }
+        }
+
+        if (hasMatch == false) {
+            System.out.println("☹ OOPS!!! No matching tasks exist.");
+        }
+    }
+
     //...
 }
