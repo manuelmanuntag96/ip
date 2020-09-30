@@ -4,8 +4,19 @@ import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Deadline class allows the creation of Deadline Tasks
+ *
+ */
 public class Deadline extends Task {
 
+    /**
+     * Deadline constructor inherits the description, sets the by member and sets the taskType as "D"
+     *
+     * @param description the name of the task
+     * @param by is the time of the deadline
+     *
+     */
     public Deadline(String description, String by) {
         super(description);
         this.by = by;
@@ -13,6 +24,15 @@ public class Deadline extends Task {
         this.date = LocalDate.parse("0000-01-01");
     }
 
+    /**
+     * addTask method adds the event into the taskList
+     *
+     * @param taskList the ArrayList that contains all the existing tasks
+     * @param taskCount current number of tasks in the taskList
+     * @param taskName name of the Deadline
+     * @param taskBy date of the Deadline
+     *
+     */
     public static int addTask(ArrayList taskList, int taskCount, String taskName, String taskBy) throws DukeException {
 
         if(!taskBy.contains("by ")) {
@@ -29,6 +49,12 @@ public class Deadline extends Task {
         }
     }
 
+    /**
+     * taskList method prints the event/deadlines from the taskList
+     *
+     * @param taskList the ArrayList that contains all the existing tasks
+     *
+     */
     public static void taskList(ArrayList taskList) {
 
         for(int i=0; i<taskList.size();i++) {

@@ -1,19 +1,33 @@
 package duke;
 
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.zip.DataFormatException;
 
+
+/**
+ * Duke class is the main class where inputs taken and sent to other classes.
+ *
+ */
 public class Duke {
     private static ArrayList<Task> taskList = new ArrayList<>();
     private static int taskCount = 0;
 
+    /**
+     * Main method handles all inputs and sends them to the Parser class to make sense of the inputs
+     * then sends the commands and data to the Command class to execute them.
+     *
+     * Tells the Storage class to either create a new save file or access the existing save file.
+     *
+     */
     public static void main(String[] args) {
         String line;
         Scanner in = new Scanner(System.in);
 
         Ui.showIntroduction();
 
-        CreateFileDir.CreateFile();
+        Storage.CreateFile();
 
         taskCount = Storage.ReadFile(taskList, taskCount);
 
@@ -34,6 +48,8 @@ public class Duke {
                     System.out.println("☹ OOPS!!! The description of a deadline cannot be empty.");
                 } catch (DukeException e) {
                     System.out.println("☹ OOPS!!! The deadline by cannot be empty.");
+                } catch (DateTimeParseException e) {
+                    System.out.println("☹ OOPS!!! Wrong format of date.");
                 }
             } else if(line.contains("event")) {
                 try {
@@ -42,6 +58,8 @@ public class Duke {
                     System.out.println("☹ OOPS!!! The description of a event cannot be empty.");
                 } catch (DukeException e) {
                     System.out.println("☹ OOPS!!! The event by cannot be empty.");
+                } catch (DateTimeParseException e) {
+                    System.out.println("☹ OOPS!!! Wrong format of date.");
                 }
             } else if(line.contains("done")) {
                 try {
