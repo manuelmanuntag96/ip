@@ -26,6 +26,7 @@ Finds the tasks in the Task List that have the same date.
 ### List Task 
 Prints the Task List.
 
+## Usage
 
 ### `list` - prints out the current Task List
 
