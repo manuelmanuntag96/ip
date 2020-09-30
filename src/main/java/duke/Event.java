@@ -11,6 +11,7 @@ public class Event extends Task {
     }
 
     public static int addTask(ArrayList taskList, int taskCount, String taskName, String taskAt) throws DukeException {
+
         if (!taskAt.contains("@ ")) {
             throw new DukeException();
         } else {
@@ -18,7 +19,7 @@ public class Event extends Task {
 
             System.out.println(" Got it. I've added this task:\n" + "  [" + ((Task)taskList.get(taskCount)).taskType + "]["+ ((Task)taskList.get(taskCount)).getStatusIcon() + "] " + ((Task)taskList.get(taskCount)).description + " (" + ((Task)taskList.get(taskCount)).by + ")"  + "\n" + " Now you have " + (taskCount+1) + " tasks in the list.");
 
-            WriteToFile.main(taskList);
+            Storage.WriteToFile(taskList);
 
             taskCount++;
             return taskCount;

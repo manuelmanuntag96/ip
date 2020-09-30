@@ -3,7 +3,6 @@ package duke;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 
 public class Deadline extends Task {
 
@@ -15,6 +14,7 @@ public class Deadline extends Task {
     }
 
     public static int addTask(ArrayList taskList, int taskCount, String taskName, String taskBy) throws DukeException {
+
         if(!taskBy.contains("by ")) {
             throw new DukeException();
         } else {
@@ -22,14 +22,15 @@ public class Deadline extends Task {
 
             System.out.println(" Got it. I've added this task:\n" + "  [" + ((Task)taskList.get(taskCount)).taskType + "]["+ ((Task)taskList.get(taskCount)).getStatusIcon() + "] " + ((Task)taskList.get(taskCount)).description + " (" + ((Task)taskList.get(taskCount)).by + ")"+ "\n" + " Now you have " + (taskCount+1) + " tasks in the list.");
 
-            WriteToFile.main(taskList);;
+            Storage.WriteToFile(taskList);;
 
             taskCount++;
             return taskCount;
         }
     }
 
-    public static void taskList(ArrayList taskList, int taskCount) {
+    public static void taskList(ArrayList taskList) {
+
         for(int i=0; i<taskList.size();i++) {
             if(((Task)taskList.get(i)).taskType == "T") {
                 System.out.println(" " + (i + 1) + ".[" + ((Task)taskList.get(i)).taskType + "][" + ((Task)taskList.get(i)).getStatusIcon() + "] " + ((Task)taskList.get(i)).description);

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 
 public class Task {
     protected String description;
@@ -20,113 +19,53 @@ public class Task {
         this.taskType = "T";
     }
 
-    public static int addTask(ArrayList taskList, int taskCount, String taskName) throws DukeException {
-        taskList.add(new Task(taskName));
+    public static void markAsDone(ArrayList<Task> taskList, int taskNum) {
+        (taskList.get(taskNum)).isDone = true;
+        Storage.WriteToFile(taskList);
 
-        System.out.println(" added: " + ((Task)taskList.get(taskCount)).description);
-
-
-
-        taskCount++;
-        return taskCount;
-    }
-
-    public static void taskList(Task[] taskList, int taskCount) {
-        for(int i=0; i<taskCount;i++) {
-            System.out.println(" " + (i+1) + ".[" + taskList[i].taskType + "][" + taskList[i].getStatusIcon() + "] " + taskList[i].description);
-        }
-    }
-
-    public static void markAsDone(ArrayList taskList, int taskCount, int taskNum) {
-        ((Task) taskList.get(taskNum)).isDone = true;
-        WriteToFile.main(taskList);
-        if (((Task) taskList.get(taskNum)).taskType == "T") {
-            System.out.println(" Nice! I've marked this task as done:\n" + "  [" + ((Task) taskList.get(taskNum)).taskType + "][" + ((Task) taskList.get(taskNum)).getStatusIcon() + "] " + ((Task) taskList.get(taskNum)).description);
-        } else if (((Task) taskList.get(taskNum)).taskType == "D") {
-            System.out.println(" Nice! I've marked this task as done:\n" + "  [" + ((Task) taskList.get(taskNum)).taskType + "][" + ((Task) taskList.get(taskNum)).getStatusIcon() + "] " + ((Task) taskList.get(taskNum)).description + " (" + ((Task) taskList.get(taskNum)).by + ")");
-        } else if (((Task) taskList.get(taskNum)).taskType == "E") {
-            System.out.println(" Nice! I've marked this task as done:\n" + "  [" + ((Task) taskList.get(taskNum)).taskType + "][" + ((Task) taskList.get(taskNum)).getStatusIcon() + "] " + ((Task) taskList.get(taskNum)).description + " (" + ((Task) taskList.get(taskNum)).by + ")");
+        if ((taskList.get(taskNum)).taskType.equals("T")) {
+            System.out.println(" Nice! I've marked this task as done:\n" + "  [" + (taskList.get(taskNum)).taskType + "][" + (taskList.get(taskNum)).getStatusIcon() + "] " + (taskList.get(taskNum)).description);
+        } else if ((taskList.get(taskNum)).taskType.equals("D")) {
+            System.out.println(" Nice! I've marked this task as done:\n" + "  [" + (taskList.get(taskNum)).taskType + "][" + (taskList.get(taskNum)).getStatusIcon() + "] " + (taskList.get(taskNum)).description + " (" + (taskList.get(taskNum)).by + ")");
+        } else if ((taskList.get(taskNum)).taskType.equals("E")) {
+            System.out.println(" Nice! I've marked this task as done:\n" + "  [" + (taskList.get(taskNum)).taskType + "][" + (taskList.get(taskNum)).getStatusIcon() + "] " + (taskList.get(taskNum)).description + " (" + (taskList.get(taskNum)).by + ")");
         }
 
     }
 
-    public static int delete(ArrayList<Task> taskList, int taskCount, int taskNum) {
-
-        if(((Task)taskList.get(taskNum)).taskType == "T") {
-            System.out.println(" Noted. I've removed this task:\n" + "  [" + ((Task)taskList.get(taskNum)).taskType + "]["+ ((Task)taskList.get(taskNum)).getStatusIcon() + "] " + ((Task)taskList.get(taskNum)).description + "\n" + " Now you have " + (taskCount - 1) + " tasks in the list.");
-        } else if (((Task)taskList.get(taskNum)).taskType == "D") {
-            System.out.println(" Noted. I've removed this task:\n" + "  [" + ((Task)taskList.get(taskNum)).taskType + "][" + ((Task)taskList.get(taskNum)).getStatusIcon() + "] " + ((Task)taskList.get(taskNum)).description + " (" + ((Task) taskList.get(taskNum)).by + ")" + "\n" + " Now you have " + (taskList.size()-1) + " tasks in the list.");
-        } else if (((Task)taskList.get(taskNum)).taskType == "E") {
-            System.out.println(" Noted. I've removed this task:\n" + "  [" + ((Task)taskList.get(taskNum)).taskType + "][" + ((Task)taskList.get(taskNum)).getStatusIcon() + "] " + ((Task)taskList.get(taskNum)).description + " (" + ((Task) taskList.get(taskNum)).by + ")" + "\n" + " Now you have " + (taskList.size()-1) + " tasks in the list.");
-        }
-
-        taskList.remove(taskNum);
-        WriteToFile.main(taskList);
-        taskCount--;
-        return taskCount;
-    }
-
-    public static String taskListToString(ArrayList taskList) {
+    public static String taskListToString(ArrayList<Task> taskList) {
         String taskListString = "";
 
         for(int i = 0; i < taskList.size(); i++) {
-            if(((Task)taskList.get(i)).taskType == "T") {
-                taskListString = taskListString + (((Task) taskList.get(i)).isDone ? "1" : "0") + " " + ((Task) taskList.get(i)).taskType + " " + ((Task) taskList.get(i)).description + "\n";
+            if((taskList.get(i)).taskType.equals("T")) {
+                taskListString = taskListString + ((taskList.get(i)).isDone ? "1" : "0") + " " + (taskList.get(i)).taskType + " " + (taskList.get(i)).description + "\n";
             } else {
-                taskListString = taskListString + (((Task) taskList.get(i)).isDone ? "1" : "0") + " " + ((Task) taskList.get(i)).taskType + " " + ((Task) taskList.get(i)).description + " /" + ((Task)taskList.get(i)).by  + "\n";
+                taskListString = taskListString + ((taskList.get(i)).isDone ? "1" : "0") + " " + (taskList.get(i)).taskType + " " + (taskList.get(i)).description + " /" + (taskList.get(i)).by  + "\n";
             }
         }
 
         return taskListString;
     }
 
-    public static int readToArray(Scanner myReader, ArrayList<Task> taskList, int taskCount) throws DukeException {
-        while (myReader.hasNextLine()) {
-            String data = myReader.nextLine();
-            int dividerPosition = data.indexOf(" ");
-            String taskNameType = data.substring(dividerPosition+1);
-            int dividerPosition2 = data.indexOf(" ");
-            if(taskNameType.contains("T ")) {
-                String taskName = taskNameType.substring(dividerPosition2+1);
-                taskCount = Todo.addTask(taskList, taskCount, taskName);
-            } else if (taskNameType.contains("D ")) {
-                int dividerBy = taskNameType.indexOf("/");
-                String taskName = taskNameType.substring(dividerPosition2+1, dividerBy - 1);
-                String taskBy = taskNameType.substring(dividerBy + 1);
-                taskCount = Deadline.addTask(taskList, taskCount, taskName, taskBy);
-                Task.setDate(taskList);
-            } else if (taskNameType.contains("E ")) {
-                int dividerBy = taskNameType.indexOf("/");
-                String taskName = taskNameType.substring(dividerPosition2+1, dividerBy-1);
-                String taskAt = taskNameType.substring(dividerBy+1);
-                taskCount = Event.addTask(taskList, taskCount, taskName, taskAt);
-                Task.setDate(taskList);
-            }
-
-            if (data.contains("1 ")) {
-                taskList.get(taskList.size()-1).isDone=true;
-            }
-        }
-        return taskCount;
-    }
-
-    public static void printDeadlines(ArrayList<Task> taskList, String key) {
+    public static void printDeadlines(ArrayList<Task> taskList, String key) throws DukeException {
         LocalDate dKey = LocalDate.parse(key);
         int count = 1;
         boolean hasMatch = false;
 
+        System.out.println(" Here are the matching dates in your list:");
+
         for (int i = 0; i < taskList.size(); i++) {
-            if (((Task) taskList.get(i)).taskType != "T") {
-                if(dKey.equals(((Task) taskList.get(i)).date)) {
+            if (!(taskList.get(i)).taskType.equals("T")) {
+                if(dKey.equals((taskList.get(i)).date)) {
                     hasMatch = true;
-                    System.out.println(" " + (count) + ".[" + ((Task)taskList.get(i)).taskType + "][" + ((Task)taskList.get(i)).getStatusIcon() + "] " + ((Task)taskList.get(i)).description + " (" + ((Task)taskList.get(i)).by + ") "  + ((Task)taskList.get(i)).date.format(DateTimeFormatter.ofPattern("MMM d yyyy")));
+                    System.out.println(" " + (count) + ".[" + (taskList.get(i)).taskType + "][" + (taskList.get(i)).getStatusIcon() + "] " + (taskList.get(i)).description + " (" + (taskList.get(i)).by + ") "  + (taskList.get(i)).date.format(DateTimeFormatter.ofPattern("MMM d yyyy")));
                     count++;
                 }
             }
         }
 
-        if (hasMatch == false) {
-            System.out.println("☹ OOPS!!! No tasks occurring on specific date.");
+        if (!hasMatch) {
+            throw new DukeException();
         }
 
     }
@@ -135,33 +74,33 @@ public class Task {
         return (isDone ? "\u2713" : "\u2718"); //return tick or X symbols
     }
 
-    public static void find(ArrayList<Task> taskList, String key) {
+    public static void find(ArrayList<Task> taskList, String key) throws DukeException {
         int count = 1;
         boolean hasMatch = false;
 
         System.out.println(" Here are the matching tasks in your list:");
+
         for (int i = 0 ; i < taskList.size(); i++) {
-            if (((Task) taskList.get(i)).description.contains(key)) {
+            if ((taskList.get(i)).description.contains(key)) {
                 hasMatch = true;
-                if(((Task)taskList.get(i)).taskType == "T") {
-                    System.out.println(" " + count +".[" + ((Task) taskList.get(i)).taskType + "][" + ((Task) taskList.get(i)).getStatusIcon() + "] " + ((Task) taskList.get(i)).description);
-                } else if(((Task)taskList.get(i)).taskType == "D") {
-                    System.out.println(" " + count +".[" + ((Task)taskList.get(i)).taskType + "]["+ ((Task)taskList.get(i)).getStatusIcon() + "] " + ((Task)taskList.get(i)).description + " (" + ((Task)taskList.get(i)).by + ")");
-                } else if(((Task)taskList.get(i)).taskType == "E") {
-                    System.out.println(" " + count +".[" + ((Task)taskList.get(i)).taskType + "]["+ ((Task)taskList.get(i)).getStatusIcon() + "] " + ((Task)taskList.get(i)).description + " (" + ((Task)taskList.get(i)).by + ")");
+                if((taskList.get(i)).taskType.equals("T")) {
+                    System.out.println(" " + count +".[" + (taskList.get(i)).taskType + "][" + (taskList.get(i)).getStatusIcon() + "] " + (taskList.get(i)).description);
+                } else if((taskList.get(i)).taskType.equals("D")) {
+                    System.out.println(" " + count +".[" + (taskList.get(i)).taskType + "]["+ (taskList.get(i)).getStatusIcon() + "] " + (taskList.get(i)).description + " (" + (taskList.get(i)).by + ")");
+                } else if((taskList.get(i)).taskType.equals("E")) {
+                    System.out.println(" " + count +".[" + (taskList.get(i)).taskType + "]["+ (taskList.get(i)).getStatusIcon() + "] " + (taskList.get(i)).description + " (" + (taskList.get(i)).by + ")");
                 }
                 count++;
             }
         }
 
-        if (hasMatch == false) {
-            System.out.println("☹ OOPS!!! No matching tasks exist.");
+        if (!hasMatch) {
+            throw new DukeException();
         }
     }
 
-    public static void setDate(ArrayList taskList) {
-        String byLine = ((Task) taskList.get(taskList.size()-1)).by;
-        System.out.println(byLine);
+    public static void setDate(ArrayList<Task> taskList) {
+        String byLine = (taskList.get(taskList.size()-1)).by;
         int dividerPosition = byLine.indexOf(" ");
         String byLineNew = byLine.substring(dividerPosition + 1);
 
@@ -169,14 +108,10 @@ public class Task {
             int dividerPositionNew = byLineNew.indexOf(" ");
             String byLineDate = byLineNew.substring(0,dividerPositionNew);
 
-            ((Task) taskList.get(taskList.size()-1)).date = LocalDate.parse(byLineDate);
+            (taskList.get(taskList.size()-1)).date = LocalDate.parse(byLineDate);
         } else {
 
-            ((Task) taskList.get(taskList.size()-1)).date = LocalDate.parse(byLineNew);
+            (taskList.get(taskList.size()-1)).date = LocalDate.parse(byLineNew);
         }
-
-
-
     }
-
 }
