@@ -1,14 +1,10 @@
 package duke;
 
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-/**
- * Task class is the Parent class of Todo, Event, and Deadline Classes.
- *
- */
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -16,23 +12,13 @@ public class Task {
     protected String by;
     protected LocalDate date;
 
-    /**
-     * Task constructor that establishes description, isDone and taskType members
-     *
-     */
+
     public Task(String description) {
         this.description = description;
         this.isDone = false;
         this.taskType = "T";
     }
 
-    /**
-     * markAsDone method takes in the taskList and desired taskNum and makes the isDone member as true
-     *
-     * @param taskList the ArrayList that contains all the existing tasks
-     * @param taskNum the index where the task to be marked is located
-     *
-     */
     public static void markAsDone(ArrayList<Task> taskList, int taskNum) {
         (taskList.get(taskNum)).isDone = true;
         Storage.WriteToFile(taskList);
@@ -47,14 +33,6 @@ public class Task {
 
     }
 
-    /**
-     * taskListToString method takes in all the tasks in the taskList converts them all into a String so that it can be stored in a save file
-     *
-     * @param taskList the ArrayList that contains all the existing tasks
-     *
-     * @return taskListString
-     *
-     */
     public static String taskListToString(ArrayList<Task> taskList) {
         String taskListString = "";
 
@@ -69,13 +47,6 @@ public class Task {
         return taskListString;
     }
 
-    /**
-     * printDeadlines method takes in the taskList and the desired date to be searched to print out all tasks with the same date
-     *
-     * @param taskList the ArrayList that contains all the existing tasks
-     * @param key the desired date for searching
-     *
-     */
     public static void printDeadlines(ArrayList<Task> taskList, String key) throws DukeException {
         LocalDate dKey = LocalDate.parse(key);
         int count = 1;
@@ -99,23 +70,10 @@ public class Task {
 
     }
 
-    /**
-     * getStatusIcon method checks the status of the isDone and return corresponding tick or X symbols
-     *
-     * @return tick or X symbols
-     *
-     */
     public String getStatusIcon() {
         return (isDone ? "\u2713" : "\u2718"); //return tick or X symbols
     }
 
-    /**
-     * find method takes in the taskList and the desired keyword to be searched to print out all tasks with the same name
-     *
-     * @param taskList the ArrayList that contains all the existing tasks
-     * @param key the desired keyword for searching
-     *
-     */
     public static void find(ArrayList<Task> taskList, String key) throws DukeException {
         int count = 1;
         boolean hasMatch = false;
@@ -141,13 +99,7 @@ public class Task {
         }
     }
 
-    /**
-     * setDate method converts the by string member of the task and turns it into a LocalDate member of the task
-     *
-     * @param taskList the ArrayList that contains all the existing tasks
-     *
-     */
-    public static void setDate(ArrayList<Task> taskList) throws DateTimeParseException {
+    public static void setDate(ArrayList<Task> taskList) {
         String byLine = (taskList.get(taskList.size()-1)).by;
         int dividerPosition = byLine.indexOf(" ");
         String byLineNew = byLine.substring(dividerPosition + 1);
