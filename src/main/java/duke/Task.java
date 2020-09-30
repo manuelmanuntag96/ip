@@ -76,7 +76,7 @@ public class Task {
      * @param key the desired date for searching
      *
      */
-    public static void printDeadlines(ArrayList<Task> taskList, String key) throws DukeException {
+    public static void printDeadlines(ArrayList<Task> taskList, String key) throws DukeException, DateTimeParseException {
         LocalDate dKey = LocalDate.parse(key);
         int count = 1;
         boolean hasMatch = false;

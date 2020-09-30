@@ -140,7 +140,7 @@ public class Command {
      * @param line user's input
      *
      */
-    public static void printCommand(String line, ArrayList<Task> taskList) throws DukeException {
+    public static void printCommand(String line, ArrayList<Task> taskList) throws DukeException, DateTimeParseException {
         String key = Parser.parseFindKey(line);
 
         Ui.printDivider();

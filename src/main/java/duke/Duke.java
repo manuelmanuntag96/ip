@@ -88,6 +88,8 @@ public class Duke {
                     Command.printCommand(line, taskList);
                 } catch (DukeException e) {
                     System.out.println("☹ OOPS!!! No tasks occurring on specified date.");
+                }  catch (DateTimeParseException e) {
+                    System.out.println("☹ OOPS!!! Wrong format of date.");
                 }
 
             } else if (!line.contains("bye") & !line.contains("todo") & !line.contains("event") & !line.contains("deadline") & !line.contains("list") & !line.contains("done") & !line.contains("delete")){
