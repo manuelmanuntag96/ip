@@ -1,6 +1,9 @@
 package duke;
 
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 public class Deadline extends Task {
 
@@ -8,6 +11,7 @@ public class Deadline extends Task {
         super(description);
         this.by = by;
         taskType = "D";
+        this.date = LocalDate.parse("0000-01-01");
     }
 
     public static int addTask(ArrayList taskList, int taskCount, String taskName, String taskBy) throws DukeException {
@@ -16,7 +20,7 @@ public class Deadline extends Task {
         } else {
             taskList.add(new Deadline(taskName, taskBy));
 
-            System.out.println(" Got it. I've added this task:\n" + "  [" + ((Task)taskList.get(taskCount)).taskType + "]["+ ((Task)taskList.get(taskCount)).getStatusIcon() + "] " + ((Task)taskList.get(taskCount)).description + " (" + ((Task)taskList.get(taskCount)).by + ")"  + "\n" + " Now you have " + (taskCount+1) + " tasks in the list.");
+            System.out.println(" Got it. I've added this task:\n" + "  [" + ((Task)taskList.get(taskCount)).taskType + "]["+ ((Task)taskList.get(taskCount)).getStatusIcon() + "] " + ((Task)taskList.get(taskCount)).description + " (" + ((Task)taskList.get(taskCount)).by + ")"+ "\n" + " Now you have " + (taskCount+1) + " tasks in the list.");
 
             WriteToFile.main(taskList);;
 
@@ -30,7 +34,7 @@ public class Deadline extends Task {
             if(((Task)taskList.get(i)).taskType == "T") {
                 System.out.println(" " + (i + 1) + ".[" + ((Task)taskList.get(i)).taskType + "][" + ((Task)taskList.get(i)).getStatusIcon() + "] " + ((Task)taskList.get(i)).description);
             } else {
-                System.out.println(" " + (i + 1) + ".[" + ((Task)taskList.get(i)).taskType + "][" + ((Task)taskList.get(i)).getStatusIcon() + "] " + ((Task)taskList.get(i)).description + " (" + ((Task)taskList.get(i)).by + ")");
+                System.out.println(" " + (i + 1) + ".[" + ((Task)taskList.get(i)).taskType + "][" + ((Task)taskList.get(i)).getStatusIcon() + "] " + ((Task)taskList.get(i)).description + " (" + ((Task)taskList.get(i)).by + ") "  + ((Task)taskList.get(i)).date.format(DateTimeFormatter.ofPattern("MMM d yyyy")) );
             }
         }
     }

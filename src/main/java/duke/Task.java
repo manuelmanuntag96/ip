@@ -2,12 +2,17 @@ package duke;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 public class Task {
     protected String description;
     protected boolean isDone;
     protected String taskType;
     protected String by;
+    protected LocalDate date;
+
 
     public Task(String description) {
         this.description = description;
@@ -89,11 +94,13 @@ public class Task {
                 String taskName = taskNameType.substring(dividerPosition2+1, dividerBy - 1);
                 String taskBy = taskNameType.substring(dividerBy + 1);
                 taskCount = Deadline.addTask(taskList, taskCount, taskName, taskBy);
+                Task.setDate(taskList);
             } else if (taskNameType.contains("E ")) {
                 int dividerBy = taskNameType.indexOf("/");
                 String taskName = taskNameType.substring(dividerPosition2+1, dividerBy-1);
                 String taskAt = taskNameType.substring(dividerBy+1);
                 taskCount = Event.addTask(taskList, taskCount, taskName, taskAt);
+                Task.setDate(taskList);
             }
 
             if (data.contains("1 ")) {
@@ -101,6 +108,27 @@ public class Task {
             }
         }
         return taskCount;
+    }
+
+    public static void printDeadlines(ArrayList<Task> taskList, String key) {
+        LocalDate dKey = LocalDate.parse(key);
+        int count = 1;
+        boolean hasMatch = false;
+
+        for (int i = 0; i < taskList.size(); i++) {
+            if (((Task) taskList.get(i)).taskType != "T") {
+                if(dKey.equals(((Task) taskList.get(i)).date)) {
+                    hasMatch = true;
+                    System.out.println(" " + (count) + ".[" + ((Task)taskList.get(i)).taskType + "][" + ((Task)taskList.get(i)).getStatusIcon() + "] " + ((Task)taskList.get(i)).description + " (" + ((Task)taskList.get(i)).by + ") "  + ((Task)taskList.get(i)).date.format(DateTimeFormatter.ofPattern("MMM d yyyy")));
+                    count++;
+                }
+            }
+        }
+
+        if (hasMatch == false) {
+            System.out.println("☹ OOPS!!! No tasks occurring on specific date.");
+        }
+
     }
 
     public String getStatusIcon() {
@@ -131,5 +159,24 @@ public class Task {
         }
     }
 
-    //...
+    public static void setDate(ArrayList taskList) {
+        String byLine = ((Task) taskList.get(taskList.size()-1)).by;
+        System.out.println(byLine);
+        int dividerPosition = byLine.indexOf(" ");
+        String byLineNew = byLine.substring(dividerPosition + 1);
+
+        if(byLineNew.contains(" ")) {
+            int dividerPositionNew = byLineNew.indexOf(" ");
+            String byLineDate = byLineNew.substring(0,dividerPositionNew);
+
+            ((Task) taskList.get(taskList.size()-1)).date = LocalDate.parse(byLineDate);
+        } else {
+
+            ((Task) taskList.get(taskList.size()-1)).date = LocalDate.parse(byLineNew);
+        }
+
+
+
+    }
+
 }

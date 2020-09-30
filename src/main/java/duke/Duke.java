@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Duke {
-    public static final int MAX_SIZE = 100;
     private static ArrayList<Task> taskList = new ArrayList<>();
     private static int taskCount = 0;
 
@@ -46,6 +45,7 @@ public class Duke {
                     String taskBy = line.substring(dividerBy + 1);
                     System.out.println("____________________________________________________________");
                     taskCount = Deadline.addTask(taskList, taskCount, taskName, taskBy);
+                    Task.setDate(taskList);
                     System.out.println("____________________________________________________________");
                 } catch (IndexOutOfBoundsException e) {
                     System.out.println("☹ OOPS!!! The description of a deadline cannot be empty.");
@@ -60,6 +60,7 @@ public class Duke {
                     String taskAt = line.substring(dividerBy+1);
                     System.out.println("____________________________________________________________");
                     taskCount = Event.addTask(taskList, taskCount, taskName, taskAt);
+                    Task.setDate(taskList);
                     System.out.println("____________________________________________________________");
                 } catch (StringIndexOutOfBoundsException e) {
                     System.out.println("☹ OOPS!!! The description of a event cannot be empty.");
@@ -99,6 +100,13 @@ public class Duke {
                 String key = line.substring(dividerPosition+1);
                 System.out.println("____________________________________________________________");
                 Task.find(taskList, key);
+                System.out.println("____________________________________________________________");
+
+            } else if(line.contains("print")) {
+                int dividerPosition = line.indexOf(" ");
+                String key = line.substring(dividerPosition+1);
+                System.out.println("____________________________________________________________");
+                Task.printDeadlines(taskList, key);
                 System.out.println("____________________________________________________________");
 
             } else if (!line.contains("bye") & !line.contains("todo") & !line.contains("event") & !line.contains("deadline") & !line.contains("list") & !line.contains("done") & !line.contains("delete")){
